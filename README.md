@@ -114,6 +114,69 @@ pipeline {
 
 ```
 
+**Docker container as agent**
+
+To use docker container as agent. 
+
+```groovy
 
 
+pipeline {
+    agent any
+
+    stages {
+        stage('Without Docker') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+        stage('With Docker') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                }
+            }
+            steps {
+                sh 'npm --version'
+            }
+        }
+    }
+}
+
+
+```
+
+
+**Workspace Synchronization**
+
+```groovy
+
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Without Docker') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+        stage('With Docker') {
+            agent {
+                docker {
+                    image 'node:18-alpine'
+		    reuseNode true
+                }
+            }
+            steps {
+                sh 'npm --version'
+            }
+        }
+    }
+}
+
+
+```
 
