@@ -113,6 +113,33 @@ pipeline {
 }
 
 ```
+**Declaring and Defining Environment Variables**
+
+```groovy
+
+pipeline {
+    agent any
+    
+    environment {
+        
+        build_filename = 'laptop'
+    }
+
+    stages {
+        stage('Hello') {
+            steps {
+                cleanWs()
+                echo 'Building a new laptop...'
+                sh '''mkdir -p build
+                    touch build/"${build_filename}".txt
+                    echo "Mainboard" >> build/"${build_filename}".txt'''
+            }
+        }
+    }
+}
+
+```
+
 
 **Docker container as agent**
 
