@@ -11,6 +11,5 @@ pipeline {
 			git branch: 'master', url: 'https://github.com/venkatamamidibathula/jenkins.git'
                     }
                 }
-                echo 'Hello World'
             }
         }
