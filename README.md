@@ -1,5 +1,15 @@
 # Jenkins
+---
 
+**Paramters**
+
+- Parameters are variables whose values are chosen when a build is triggered, then used inside the job or pipeline logic.
+
+- Typical uses: choosing environment (dev/qa/prod), branch name, version tag, feature flags, or file paths.
+
+
+
+---
 **Clean working directory** : cleanWs()
 
 **Post Build Artifacts** : archiveArtifacts artifacts: '{path}' 

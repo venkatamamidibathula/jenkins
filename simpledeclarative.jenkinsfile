@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    environment {
+        SENTENCE = "A thousand splendid sons"
+    }
+    stages {
+        stage('Hello') {
+            steps {
+                script {
+                    def words = env.SENTENCE.split(' ')
+                    for (word in words) {
+                        echo "${word}"
+                    }
+                }
+                echo 'Hello World'
+            }
+        }
+    }
+}
