@@ -31,4 +31,10 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            archiveArtifacts artifacts: "${env.ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false, allowEmptyArchive: true
+            cleanWs()
+        }
+    }
 }
