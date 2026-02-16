@@ -277,3 +277,73 @@ pipeline {
 
 
 
+
+---
+
+# Artifact pipeline
+
+
+```jenkins
+
+pipeline {
+    agent any
+    environment {
+        ARTIFACT_SOURCE_DIRECTORY = "tests/*.xml"
+    }
+    stages {
+        stage('Build and Package in Parallel') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo "Building the code from branch ${env.BRANCH_NAME}"
+                    }
+                }
+                stage('Package') {
+                    steps {
+                        echo "Packaging the code from branch ${env.BRANCH_NAME}"
+                    }
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                echo "Running tests and generating artifacts in ${env.ARTIFACT_SOURCE_DIRECTORY}"
+                sh 'mkdir -p tests && echo "<testsuite><testcase classname=\\"example\\" name=\\"test1\\"/></testsuite>" > tests/test-results.xml'
+            }
+        }
+        stage('Publish Artifacts') {
+            steps {
+                echo "Publishing artifacts from ${env.ARTIFACT_SOURCE_DIRECTORY}"
+                archiveArtifacts artifacts: "${env.ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false
+            }
+        }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: "${env.ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false, allowEmptyArchive: true
+            cleanWs()
+        }
+    }
+}
+
+
+```
+
+# External Resource Model
+
+![Alt text](externalresourcemodel.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
