@@ -1,1 +1,3 @@
-A feature branch that needs build
+A feature branch that needs build.
+
+Another way to treat this
