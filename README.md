@@ -14,7 +14,7 @@
 
 **Post Build Artifacts** : archiveArtifacts artifacts: '{path}' 
 
-```groovy
+```jenkins
 pipeline {
     agent any
 
@@ -216,4 +216,64 @@ pipeline {
 
 
 ```
+# Parallel builds in Docker
+
+
+
+```jenkins
+
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'branch', defaultValue: 'master', description: 'The branch to build ')
+    }
+
+    triggers {
+        cron('0 3 * * 1-5')
+    }
+
+    environment {
+        SENTENCE = "A thousand splendid sons"
+    }
+
+    stages {
+        stage('SCM') {
+            steps {
+                git branch: "${params.branch}", url: 'https://github.com/venkatamamidibathula/jenkins.git'
+            }
+        }
+
+        stage('Build and Package in Parallel') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo "Building the code from branch ${params.branch}"
+                    }
+                }
+                stage('Package') {
+                    when {
+                        expression {
+                            return params.branch ==  "${params.branch}"
+                        }
+                    }
+                    steps {
+                        echo "Packaging the code from branch ${params.branch}"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+```
+
+
+
+**Multi-Stage builds**
+
+
+
 
