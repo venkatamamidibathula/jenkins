@@ -1,5 +1,13 @@
 pipeline {
     agent any
+
+    parameters {
+        string(name: 'branch', defaultValue: 'master', description: 'The branch to build ')
+    }
+
+    triggers {
+        cron('0 3 * * 1-5')
+    }
     environment {
         SENTENCE = "A thousand splendid sons"
     }
@@ -11,5 +19,15 @@ pipeline {
 			git branch: 'master', url: 'https://github.com/venkatamamidibathula/jenkins.git'
                     }
                 }
+        stage('Build') {
+            steps {
+                echo "Building the code from branch ${params.branch}"
             }
         }
+        stage('Package') {
+            steps {
+                echo "Packaging the code from branch ${params.branch}"
+            }
+        }
+    }
+}
