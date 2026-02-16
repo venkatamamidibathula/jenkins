@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'branch', defaultValue: 'master', description: 'The branch to build ')
-    }
 
     triggers {
         cron('0 3 * * 1-5')
@@ -14,11 +11,6 @@ pipeline {
     }
 
     stages {
-        stage('SCM') {
-            steps {
-                git branch: "${params.branch}", url: 'https://github.com/venkatamamidibathula/jenkins.git'
-            }
-        }
 
         stage('Build and Package in Parallel') {
             parallel {
