@@ -17,19 +17,18 @@ pipeline {
                     }
                 }
             }
+        }
         stage('Run Tests') {
             steps {
-                echo "Running tests and generating artifacts in ${ARTIFACT_SOURCE_DIRECTORY}"
+                echo "Running tests and generating artifacts in ${env.ARTIFACT_SOURCE_DIRECTORY}"
                 sh 'mkdir -p tests && echo "<testsuite><testcase classname=\\"example\\" name=\\"test1\\"/></testsuite>" > tests/test-results.xml'
             }
         }
         stage('Publish Artifacts') {
             steps {
-                echo "Publishing artifacts from ${ARTIFACT_SOURCE_DIRECTORY}"
-                archiveArtifacts artifacts: "${ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false
-
+                echo "Publishing artifacts from ${env.ARTIFACT_SOURCE_DIRECTORY}"
+                archiveArtifacts artifacts: "${env.ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false
             }
         }
     }
 }
-
