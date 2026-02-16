@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        ARTIFACT_SOURCE_DIRECTORY = "tests/*.xml"
+    }
+    stages {
+        stage('Build and Package in Parallel') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        echo "Building the code from branch ${env.BRANCH_NAME}"
+                    }
+                }
+                stage('Package') {
+                    steps {
+                        echo "Packaging the code from branch ${env.BRANCH_NAME}"
+                    }
+                }
+            }
+        stage('Publish Artifacts') {
+            steps {
+                echo "Publishing artifacts from ${ARTIFACT_SOURCE_DIRECTORY}"
+                archiveArtifacts artifacts: "${ARTIFACT_SOURCE_DIRECTORY}", followSymlinks: false
+
+            }
+        }
+    }
+}
+
