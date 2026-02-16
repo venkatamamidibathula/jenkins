@@ -17,6 +17,12 @@ pipeline {
                     }
                 }
             }
+        stage('Run Tests') {
+            steps {
+                echo "Running tests and generating artifacts in ${ARTIFACT_SOURCE_DIRECTORY}"
+                sh 'mkdir -p tests && echo "<testsuite><testcase classname=\\"example\\" name=\\"test1\\"/></testsuite>" > tests/test-results.xml'
+            }
+        }
         stage('Publish Artifacts') {
             steps {
                 echo "Publishing artifacts from ${ARTIFACT_SOURCE_DIRECTORY}"
