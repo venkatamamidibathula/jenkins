@@ -1,33 +1,21 @@
 pipeline {
     agent any
-
-
-    }
-
-    environment {
-        SENTENCE = "A thousand splendid sons"
-    }
-
+    
     stages {
-
         stage('Build and Package in Parallel') {
             parallel {
                 stage('Build') {
                     steps {
-                        echo "Building the code from branch ${params.branch}"
+                        echo "Building the code from branch ${env.BRANCH_NAME}"
                     }
                 }
                 stage('Package') {
-                    when {
-                        expression {
-                            return params.branch ==  "${params.branch}"
-                        }
-                    }
                     steps {
-                        echo "Packaging the code from branch ${params.branch}"
+                        echo "Packaging the code from branch ${env.BRANCH_NAME}"
                     }
                 }
             }
         }
     }
 }
+
