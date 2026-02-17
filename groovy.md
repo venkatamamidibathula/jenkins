@@ -91,3 +91,39 @@ for (int i=0; i < firstnames.size(); i++) {
 
 
 ```
+
+
+---
+
+# Classes and Objects
+
+
+Generating userid's using class and objects
+
+
+```groovy
+
+class User {
+
+    String firstname;
+    String lastname;
+    
+    public String username(){
+    
+        return getusername(this.firstname, this.lastname);
+        
+    }
+    
+    private String getusername(String firstname, String lastname){
+        return firstname.toLowerCase().substring(0,1)+lastname.toLowerCase();
+    }
+  
+  }
+  
+  
+  User [] users = [new User(firstname: "Bob" , lastname: "Dylan"), new User(firstname: "Jeff", lastname: "Nelson"), new User(firstname: "Liam", lastname: "Nesson")];
+  
+  users.each(user -> println("Username is ${user.username()}"));
+
+
+```
