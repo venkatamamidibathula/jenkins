@@ -127,3 +127,52 @@ class User {
 
 
 ```
+
+
+
+---
+
+# Abstract classes
+
+
+```groovy
+class RegularUser extends User { }
+abstract class User {
+    String firstname
+    String lastname
+    
+    public String username() {
+        return getusername(firstname, lastname)
+    }
+    
+    private String getusername(String firstname, String lastname) {
+        return firstname.toLowerCase().substring(0,1) + lastname.toLowerCase()
+    }
+}
+
+
+
+class Artist extends User {
+    public String[] Songs;
+}
+
+class Producer extends User {
+    public void Produce() {
+        println("Album Complete")
+    }
+}
+
+User[] users = [new RegularUser(firstname: "Bob", lastname: "Dylan"),new RegularUser(firstname: "Jeff", lastname: "Nelson"), new RegularUser(firstname: "Liam", lastname: "Nesson"),new Artist(firstname: "Roy", lastname: "Wilson", Songs: ["BEkhayalo","Sadma"]),new Producer(firstname: "Satyajit", lastname: "Ray")];
+
+users.each { user -> 
+    if (user instanceof Artist) {              
+        println("Username is ${user.username()}") 
+        user.Songs.each { song -> println("${song}") }
+    } else if (user instanceof Producer) { 
+        user.Produce()
+    } else {
+        println("${user.username()} - Regular user") 
+    }
+}
+
+```
