@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'Branch to build and package')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Whether to run tests and generate artifacts')
+        choice(name: 'environment', choices: ['qa', 'dev', 'stage', 'production'], description: 'Choose the environment to deploy')
+    }
+    
+    stages {
+        stage('Build and Package in Parallel') {
+            steps{
+                echo "Building the code from branch ${params.BRANCH_NAME}"
+                echo "Packaging the code from branch ${params.BRANCH_NAME}"
+                echo "Selected environment for deployment: ${params.environment}"
+                
+            }
+        }
+    }
+}
+
